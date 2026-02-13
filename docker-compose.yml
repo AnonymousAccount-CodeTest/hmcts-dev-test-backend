@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:14.20-trixie
+    environment:
+      - POSTGRES_USER=username
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=taskdb
+    ports:
+      - "5432:5432"
+
+  test-backend:
+    image: test-backend:latest
+    ports:
+      - "4000:4000"
+    depends_on:
+      - postgres

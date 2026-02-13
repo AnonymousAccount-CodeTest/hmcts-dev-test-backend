@@ -1,0 +1,38 @@
+server:
+  port: 4000
+  shutdown: "graceful"
+
+# If you want to use a database then uncomment the `group:, readiness: and include: "db"`
+# lines in the health probes and uncomment the datasource section
+management:
+  endpoint:
+    health:
+      show-details: "always"
+      # group:
+      #  readiness:
+      #   include: "db"
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: info # should we have more?
+
+springdoc:
+  packagesToScan: uk.gov.hmcts.reform.dev.controllers
+  writer-with-order-by-keys: true
+
+spring:
+  config:
+    import: "optional:configtree:/mnt/secrets/test/"
+  application:
+    name: Dev Test
+  datasource:
+    url: jdbc:postgresql://postgres:5432/taskdb
+    username: username
+    password: password
+
+    # JPA / Hibernate settings
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
